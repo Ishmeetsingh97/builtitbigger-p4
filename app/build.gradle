@@ -1,0 +1,49 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
+
+    defaultConfig {
+        applicationId "com.udacity.gradle.builditbigger"
+        minSdkVersion 10
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+        testInstrumentationRunner "com.android.test.runner.MultiDexTestRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+
+    productFlavors {
+        free {
+            applicationId "com.udacity.gradle.builditbigger"
+            resValue "string", "app_name", "Build it Bigger Free"
+        }
+        paid {
+            applicationId "com.udacity.gradle.builditbigger.paid"
+            resValue "string", "app_name", "Build it Bigger Paid"
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    // Added for AdMob
+    compile project(':myandroidlibrary')
+    compile project(':myjavalibrary')
+    compile project(path: ':backend', configuration: 'android-endpoints')
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    freeCompile 'com.google.android.gms:play-services:9.4.0'
+    compile 'com.android.support:support-v4:23.4.0'
+
+}
